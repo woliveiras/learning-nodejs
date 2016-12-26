@@ -13,3 +13,9 @@
 - npm adduser <user>: cria uma conta no NPM
 - npm whoami: exibe detalhes do perfil publico
 - npm publish: publica um pacote
+
+## versionamento
+
+- `~` : faz atualização a nível de path
+- `>` : trás versões mais atuais do que a indicada
+- `*` : sempre pega a última versão
