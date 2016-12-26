@@ -1,0 +1,12 @@
+{
+  "name": "ntalk",
+  "description": "Node talk - Agenda de contatos",
+  "version": "0.0.0",
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0"
+  }
+}
