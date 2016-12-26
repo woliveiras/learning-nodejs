@@ -1,3 +1,8 @@
-# Learning Nodejs
+# Aprendendo Nodejs
 
-*Experimental* - My repository to host codes about studies of Nodejs
+*Experimental* - hospedando códigos de exemplos enquanto estudo Nodejs
+
+## Requisitos
+
+- NVM: https://woliveiras.com.br/posts/utilizando-versoes-antigas-do-nodejs/
+- Express Generator: `npm install -g express-generator`
