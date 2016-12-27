@@ -1,0 +1,16 @@
+<% include ../header %>
+  <header>
+    <h2>Ntalk - Dados do contato</h2>
+  </header>
+  <section>
+    <form action="/contact/<%- id %>?_method=delete"  method="post">
+      <p><label>Nome:</label><%- contact.name %></p>
+      <p><label>E-mail:</label><%- contact.mail %></p>
+      <p>
+      <button type="submit">Excluir</button>
+      <a href="/contact/<%- id %>/edit">Editar</a>
+      </p>
+    </form>
+  </section>
+<% include ../exit %>
+<% include ../footer %>

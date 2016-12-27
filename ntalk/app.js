@@ -3,6 +3,7 @@ const load = require('express-load');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
+const methodOverride = require('method-override');
 const app = express();
 
 app.set('views',  __dirname + '/views');
@@ -15,6 +16,7 @@ app.use(expressSession({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public'));
 
 load('models')
