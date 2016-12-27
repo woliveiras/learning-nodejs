@@ -1,9 +1,20 @@
 const express = require('express');
 const load = require('express-load');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
 const app = express();
 
 app.set('views',  __dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(cookieParser('ntalk'));
+app.use(expressSession({
+    secret: "123",
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
 load('models')
