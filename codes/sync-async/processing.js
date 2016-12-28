@@ -9,9 +9,7 @@ const download = "http://nodejs.org/dist/latest/node.exe";
 http.get(download, (res) => {
   console.log("Fazendo download do Nodejs");
 
-  res.on('data', (data) => {
-    stream.write(data);
-  });
+  res.on('data', (data) => stream.write(data));
 
   res.on('end', () => {
     stram.end();
