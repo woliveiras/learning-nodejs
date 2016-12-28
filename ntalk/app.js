@@ -28,6 +28,4 @@ load('models')
 app.use(error.notFound);
 app.use(error.serverError);
 
-app.listen(3000, () => {
-  console.log("Ntalk is running on localhost:3000");
-});
+app.listen(3000, () => console.log("Ntalk is running on localhost:3000"));
