@@ -1,6 +1,6 @@
 module.exports = (app) => {
   let ContactsController = {
-    index : (req, res) => {
+    index(req, res) {
         let user = req.session.user;
         let contacts = user.contacts;
         let params = {
@@ -9,13 +9,13 @@ module.exports = (app) => {
         };
         res.render('contacts/index', params);
     },
-    create : (req, res) => {
+    create(req, res) {
       let contact = req.body.contact;
       let user = req.session.user;
       user.contacts.push(contact);
       res.redirect('/contacts');
     },
-    show : (req, res) => {
+    show(req, res) {
       let id = req.params.id;
       let contact = req.session.user.contacts[id];
       let params = {
@@ -24,7 +24,7 @@ module.exports = (app) => {
       }
       res.render('contacts/edit', params);
     },
-    edit : (req, res) => {
+    edit(req, res) {
       let id = req.params.id;
       let user = req.session.user;
       let contact = user.contacts[id];
@@ -35,13 +35,13 @@ module.exports = (app) => {
       };
       res.render('contacts/edit', params);
     },
-    update : (req, res) => {
+    update(req, res) {
       let contact = req.body.contact;
       let user = req.session.user;
       user.contacts[req.params.id] = contact;
       res.redirect('/contacts');
     },
-    destroy: function(req, res) {
+    destroy(req, res) {
       let user = req.session.user;
       let id = req.params.id;
       user.contacts.splice(id, 1);

@@ -1,9 +1,9 @@
 module.exports = (app) => {
   const HomeController = {
-    index: (req, res) => {
+    index(req, res) {
       res.render('home/index');
     },
-    login: (req, res) => {
+    login(req, res) {
       let mail = req.body.user.mail;
       let name = req.body.user.name;
 
@@ -17,7 +17,7 @@ module.exports = (app) => {
         res.redirect('/');
       }
     },
-    logout: (req, res) => {
+    logout(req, res) {
       req.session.destroy();
       res.redirect('/');
     }
