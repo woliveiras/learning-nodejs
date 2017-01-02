@@ -1,6 +1,6 @@
 module.exports = (app) => {
-  let auth = require('./../middlewares/auth');
-  let contacts = app.controllers.contacts;
+  const auth = require('./../middlewares/auth');
+  const contacts = app.controllers.contacts;
 
   app.get('/contacts', auth, contacts.index);
   app.get('/contact/:id', auth, contacts.show);
