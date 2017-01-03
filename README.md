@@ -6,6 +6,7 @@
 
 - NVM: https://woliveiras.com.br/posts/utilizando-versoes-antigas-do-nodejs/
 - Express Generator: `npm install -g express-generator`
+- Nodemon: `npm install -g nodemon`
 
 ## Aplicações de exemplo
 
