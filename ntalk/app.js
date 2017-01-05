@@ -1,3 +1,6 @@
+const KEY  = 'ntalk.sid';
+const SECRET = "ntalk";
+
 const express = require('express');
 const load = require('express-load');
 const bodyParser = require('body-parser');
@@ -8,14 +11,18 @@ const error = require('./middlewares/error');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const cookie = cookieParser(SECRET);
+const store = new expressSession.MemoryStore();
 
 app.set('views',  __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(cookieParser('ntalk'));
+app.use(cookie);
 app.use(expressSession({
-    secret: "123",
+    secret: SECRET,
+    name: KEY,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: store
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,13 +34,24 @@ load('models')
   .then('routes')
   .into(app);
 
-io.sockets.on('connection', (client) => {
-  client.on('send-server', (data) => {
-    let msg = "<b>" + data.name + ": </b>" + data.msg + "<br>";
-    client.emit('send-client', msg);
-    client.broadcast.emit('send-client', msg);
+io.use((socket, next) => {
+  let data = socket.request;
+
+  cookie(data, {}, (error) => {
+    let sessionID = data.signedCookies[KEY];
+    store.get(sessionID, (error, session) => {
+      if (error || !session) {
+        return next(new Error("Acesso negado"));
+      } else {
+        socket.handshake.session = session;
+        return next();
+      }
+    });
   });
 });
+
+load('sockets')
+  .into(io);
 
 app.use(error.notFound);
 app.use(error.serverError);

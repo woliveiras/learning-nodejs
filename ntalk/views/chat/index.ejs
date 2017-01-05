@@ -3,16 +3,13 @@
   const socket = io('http://localhost:4000');
 
   socket.on('send-client',  (msg) => {
-   document.getElementById('chat').innerHTML += msg;
+   let chat = document.getElementById('chat');
+   chat.innerHTML += msg;
   });
 
   const send = () => {
-    let name = document.getElementById('name').value;
-    let msg = document.getElementById('msg').value;
-    socket.emit('send-server', {
-      name: name,
-      msg: msg
-    });
+    let msg = document.getElementById('msg');
+    socket.emit('send-server', msg.value);
   };
 </script>
 <header>
@@ -20,7 +17,6 @@
 </header>
 <section>
   <pre id="chat"></pre>
-  <input type="hidden" id="name" value="<%- user.name %>">
   <input type="text" id="msg" placeholder="Mensagem">
   <button onclick="send();">Enviar</button>
 </section>
