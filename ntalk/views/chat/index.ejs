@@ -1,14 +1,14 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io('http://localhost:4000');
+  const socket = io('http://localhost:4000');
 
-  socket.on('send-client',  function(msg) {
+  socket.on('send-client',  (msg) => {
    document.getElementById('chat').innerHTML += msg;
   });
 
-  var send = function() {
-    var name = document.getElementById('name').value;
-    var msg = document.getElementById('msg').value;
+  const send = () => {
+    let name = document.getElementById('name').value;
+    let msg = document.getElementById('msg').value;
     socket.emit('send-server', {
       name: name,
       msg: msg
