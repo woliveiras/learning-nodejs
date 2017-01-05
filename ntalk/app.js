@@ -6,6 +6,8 @@ const expressSession = require('express-session');
 const methodOverride = require('method-override');
 const error = require('./middlewares/error');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 app.set('views',  __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -25,7 +27,15 @@ load('models')
   .then('routes')
   .into(app);
 
+io.sockets.on('connection', (client) => {
+  client.on('send-server', (data) => {
+    let msg = "<b>" + data.name + ": </b>" + data.msg + "<br>";
+    client.emit('send-client', msg);
+    client.broadcast.emit('send-client', msg);
+  });
+});
+
 app.use(error.notFound);
 app.use(error.serverError);
 
-app.listen(3000, () => console.log("Ntalk is running on localhost:3000"));
+server.listen(4000, () => console.log("Ntalk is running on localhost:4000"));

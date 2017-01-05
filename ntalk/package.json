@@ -10,6 +10,7 @@
     "express": "^4.14.0",
     "express-load": "^1.1.15",
     "express-session": "^1.14.2",
-    "method-override": "^2.3.7"
+    "method-override": "^2.3.7",
+    "socket.io": "^1.7.2"
   }
 }

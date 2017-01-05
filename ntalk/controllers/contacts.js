@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (app) => {
-  let ContactsController = {
+  const ContactsController = {
     index(req, res) {
         let user = req.session.user;
         let contacts = user.contacts;
@@ -9,6 +9,7 @@ module.exports = (app) => {
           user : user,
           contacts : contacts
         };
+
         res.render('contacts/index', params);
     },
     create(req, res) {
