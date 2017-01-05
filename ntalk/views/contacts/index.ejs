@@ -23,12 +23,13 @@
           <td><%- contact.mail %></td>
           <td>
           <a href="/contact/<%- index %>">Detalhes</a>
-          <a href="/chat">Conversar</a>
+          <a href="/chat" id="chat_<%- contact.mail %>">Conversar</a>
           </td>
         </tr>
       <% }) %>
       </tbody>
     </table>
   </section>
+<% include notify_script %>
 <% include ../exit %>
 <% include ../footer %>

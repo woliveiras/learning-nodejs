@@ -1,6 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   const socket = io('http://localhost:4000');
+  socket.emit('join', '<%- room %>');
 
   socket.on('send-client',  (msg) => {
    let chat = document.getElementById('chat');

@@ -1,0 +1,9 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io('http://localhost:4000');
+
+  socket.on('new-message', (data) => {
+    const chat = document.getElementById('chat_' + data.mail);
+    chat.href += '?room=' + data.room;
+  });
+</script>

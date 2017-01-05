@@ -1,7 +1,10 @@
 module.exports = (app) => {
   const ChatController = {
     index(req, res) {
-      res.render('chat/index');
+      let params = {
+        room: req.query.room
+      };
+      res.render('chat/index', params);
     }
   };
 
