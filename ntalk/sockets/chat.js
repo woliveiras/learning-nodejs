@@ -1,10 +1,17 @@
 module.exports = (io) => {
   const crypto = require('crypto');
   const   sockets = io.sockets;
+  let onlines = {};
 
   sockets.on('connection', (client) => {
     let session = client.handshake.session;
     let user = session.user;
+    onlines[user.mail] = user.mail;
+
+    for (let mail in onlines) {
+      client.emit('notify-onlines', mail);
+      client.broadcast.emit('notify-onlines', mail);
+    }
 
     client.on('join', (room) => {
       if(!room) {
@@ -17,7 +24,14 @@ module.exports = (io) => {
     });
 
     client.on('disconnect', () => {
-      client.leave(session.room);
+      const room = session.room;
+      const msg = `<b>${user.name} saiu.</b><br>`;
+      client.broadcast.emit('notify-offlines', user.mail);
+      sockets.in(room).emit('send-client', msg);
+
+      delete onlines[user.mail];
+
+      client.leave(room);
     });
 
     client.on('send-server', (msg) => {
