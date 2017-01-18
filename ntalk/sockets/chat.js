@@ -37,7 +37,7 @@ module.exports = (io) => {
     client.on('send-server', (msg) => {
       let room = session.room;
       let data = { mail: user.mail, room: room  };
-      let message = "<b>" + user.name + ": </b>" + msg + "<br>";
+      let message = `<b>${user.name}: </b> ${msg}<br>`;
 
       client.broadcast.emit('new-message', data);
       sockets.in(room).emit('send-client', message);
