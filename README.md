@@ -5,8 +5,8 @@
 ## Requisitos
 
 - NVM: https://woliveiras.com.br/posts/utilizando-versoes-antigas-do-nodejs/
-- Express Generator: `npm install -g express-generator`
-- Nodemon: `npm install -g nodemon`
+- Express Generator: `npm i -g express-generator`
+- Nodemon: `npm i -g nodemon`
 
 ## Aplicações de exemplo
 
@@ -14,7 +14,17 @@
 
 O NTalk é um exemplo de app de agenda de contatos com chat real-time do livro [Aplicações web real-time com Node.js](https://www.casadocodigo.com.br/products/livro-nodejs)
 
-Para rodar o NTalk execute: `cd ntalk && npm install && node app.js`
+Antes de rodar o app, instale as dependências:
+
+```
+sh ntalk/install_deps.sh
+```
+
+Para rodar o NTalk execute:
+
+```
+cd ntalk && npm i && node app.js
+```
 
 ## Referências
 

@@ -1,54 +1,75 @@
 "use strict";
 
 module.exports = (app) => {
+  const User = app.models.user;
+
   const ContactsController = {
     index(req, res) {
-        let user = req.session.user;
-        let contacts = user.contacts;
-        let params = {
-          user : user,
-          contacts : contacts
-        };
+      const _id = req.session.user._id;
 
-        res.render('contacts/index', params);
+      User.findById(_id, (error, user) => {
+        const contacts = user.contacts;
+        const result = { contacts : contacts };
+
+        res.render('contacts/index', result);
+      });
     },
     create(req, res) {
-      let contact = req.body.contact;
-      let user = req.session.user;
-      user.contacts.push(contact);
-      res.redirect('/contacts');
+      const _id = req.session.user._id;
+
+      User.findById(_id, (error, user) => {
+        const contact = req.body.contact;
+        const contacts = user.contacts;
+        contacts.push(contact);
+
+        user.save(() => res.redirect('/contacts'));
+      });
     },
     show(req, res) {
-      let id = req.params.id;
-      let contact = req.session.user.contacts[id];
-      let params = {
-        contact : contact,
-        id : id
-      }
-      res.render('contacts/edit', params);
+      const _id = req.session.user._id;
+
+      User.findById(_id, (error, user) => {
+        const contactID = req.params.id;
+        const contact = user.contacts.id(contactID);
+        const result = { contact: contact };
+
+        console.log(`results: ${result}`);
+
+        res.render('contacts/show', result);
+      });
     },
     edit(req, res) {
-      let id = req.params.id;
-      let user = req.session.user;
-      let contact = user.contacts[id];
-      let params = {
-        user : user,
-        contact : contact,
-        id : id
-      };
-      res.render('contacts/edit', params);
+      const _id = req.session.user._id;
+
+      User.findById(_id, (error, user) => {
+        const contactID = req.params.id;
+        const contact = user.contacts.id(contactID);
+        const result = { contact: contact };
+
+        res.render('contacts/edit', result);
+      });
     },
     update(req, res) {
-      let contact = req.body.contact;
-      let user = req.session.user;
-      user.contacts[req.params.id] = contact;
-      res.redirect('/contacts');
+      const _id = req.session.user._id;
+
+      User.findById(_id, (error, user) => {
+        const contactID = req.params.id;
+        const contact = user.contacts.id(contactID);
+        contact.name = req.body.contact.name;
+        contact.mail = req.body.contact.mail;
+
+        user.save(() => res.redirect('contacts/'));
+      });
     },
     destroy(req, res) {
-      let user = req.session.user;
-      let id = req.params.id;
-      user.contacts.splice(id, 1);
-      res.redirect('/contacts');
+      const _id = req.session.user._id;
+
+      User.findById(_id, (error, user) => {
+        const contactID = req.params.id;
+        user.contacts.id(contactID).remove();
+
+        user.save(() => res.redirect('contacts/'));
+      });
     }
   };
   return ContactsController;
