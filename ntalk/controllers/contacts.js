@@ -22,6 +22,8 @@ module.exports = (app) => {
         const contacts = user.contacts;
         contacts.push(contact);
 
+        console.log(contact);
+
         user.save(() => res.redirect('/contacts'));
       });
     },
@@ -32,8 +34,6 @@ module.exports = (app) => {
         const contactID = req.params.id;
         const contact = user.contacts.id(contactID);
         const result = { contact: contact };
-
-        console.log(`results: ${result}`);
 
         res.render('contacts/show', result);
       });

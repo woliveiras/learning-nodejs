@@ -14,10 +14,16 @@
 
 O NTalk é um exemplo de app de agenda de contatos com chat real-time do livro [Aplicações web real-time com Node.js](https://www.casadocodigo.com.br/products/livro-nodejs)
 
-Antes de rodar o app, instale as dependências:
+Antes de rodar o app, instale as dependências (serviços) do projeto:
 
 ```
 sh ntalk/install_deps.sh
+```
+
+E inicie os serviços:
+
+```
+sh run_services.sh
 ```
 
 Para rodar o NTalk execute:

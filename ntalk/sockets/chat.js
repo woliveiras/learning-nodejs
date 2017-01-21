@@ -1,17 +1,20 @@
 module.exports = (io) => {
   const crypto = require('crypto');
+  const redis = require('redis').createClient();
   const   sockets = io.sockets;
-  let onlines = {};
 
   sockets.on('connection', (client) => {
     let session = client.handshake.session;
     let user = session.user;
-    onlines[user.mail] = user.mail;
 
-    for (let mail in onlines) {
-      client.emit('notify-onlines', mail);
-      client.broadcast.emit('notify-onlines', mail);
-    }
+    redis.sadd('onlines', user.mail, (error) => {
+      redis.smembers('onlines', (error, mails) => {
+        mails.forEach((mail) => {
+          client.emit('notify-onlines', mail);
+          client.broadcast.emit('notify-onlines', mail);
+        });
+      });
+    });
 
     client.on('join', (room) => {
       if(!room) {
@@ -21,15 +24,28 @@ module.exports = (io) => {
       }
       session.room = room;
       client.join(room);
+      const msg = `<b>Usuário ${ user.name }: entrou.</b><br>`;
+
+      console.log("join", room, msg);
+      redis.lpush(room, msg, (error, res) => {
+        redis.lrange(room, 0, -1, (error, msg) => {
+          msg.forEach((msg) => {
+            sockets.in(room).emit('send-client', msg);
+          })
+        });
+      });
     });
 
     client.on('disconnect', () => {
       const room = session.room;
-      const msg = `<b>${user.name} saiu.</b><br>`;
+      const msg = `<b>${ user.name } saiu.</b><br>`;
+
+      console.log("disconnect", room, msg);
+      redis.lpush(room, msg);
       client.broadcast.emit('notify-offlines', user.mail);
       sockets.in(room).emit('send-client', msg);
 
-      delete onlines[user.mail];
+      redis.srem('onlines', user.mail);
 
       client.leave(room);
     });
@@ -37,11 +53,12 @@ module.exports = (io) => {
     client.on('send-server', (msg) => {
       let room = session.room;
       let data = { mail: user.mail, room: room  };
-      let message = `<b>${user.name}: </b> ${msg}<br>`;
+      msg = `<b>${ user.name }: </b> ${ msg }<br>`;
 
+      console.log("send-server", room, msg);
+      redis.lpush(room, msg);
       client.broadcast.emit('new-message', data);
-      sockets.in(room).emit('send-client', message);
+      sockets.in(room).emit('send-client', msg);
     });
-
   });
 };
