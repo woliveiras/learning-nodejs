@@ -15,5 +15,10 @@
     "mongoose": "^4.7.7",
     "redis": "^2.6.5",
     "socket.io": "^1.7.2"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "should": "^11.1.2",
+    "supertest": "^2.0.1"
   }
 }
