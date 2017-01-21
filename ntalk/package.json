@@ -20,5 +20,9 @@
     "mocha": "^3.2.0",
     "should": "^11.1.2",
     "supertest": "^2.0.1"
+  },
+  "scripts" : {
+    "start": "nodemon app.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha tests/**/*.js"
   }
 }

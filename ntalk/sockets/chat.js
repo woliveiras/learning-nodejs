@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (io) => {
   const crypto = require('crypto');
   const redis = require('redis').createClient();

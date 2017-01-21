@@ -1,3 +1,5 @@
+"use strict";
+
 const KEY  = 'ntalk.sid';
 const SECRET = "ntalk";
 
@@ -57,3 +59,5 @@ app.use(error.notFound);
 app.use(error.serverError);
 
 server.listen(4000, () => console.log("Ntalk is running on localhost:4000"));
+
+module.exports = app;
