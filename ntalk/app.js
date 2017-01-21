@@ -13,9 +13,6 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookie = cookieParser(SECRET);
 const store = new expressSession.MemoryStore();
-const mongoose = require('mongoose');
-
-global.db = mongoose.connect('mongodb://localhost/ntalk');
 
 app.set('views',  __dirname + '/views');
 app.set('view engine', 'ejs');
